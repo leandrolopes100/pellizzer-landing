@@ -345,7 +345,7 @@ export default function App() {
                   Gestão Baseada em <br /> <span className="italic">Dados e Resultados</span>.
                 </h2>
                 <p className="text-black/80 text-xl font-medium leading-relaxed mb-16">
-                  Nosso dashboard exclusivo permite que você acompanhe KPIs críticos.
+                  Acompanhe sua operação em tempo real com total transparência.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
