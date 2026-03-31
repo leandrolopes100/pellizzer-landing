@@ -270,7 +270,7 @@ export default function App() {
                   />
                   <MetricItem 
                     label="Frota 100% Nova" 
-                    value="< 3 Anos" 
+                    value="9 anos" 
                     description="Veículos modernos com tecnologia de ponta."
                   />
                 </div>
@@ -315,14 +315,13 @@ export default function App() {
                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                         <motion.div 
                           initial={{ width: 0 }}
-                          animate={{ width: "85%" }}
+                          animate={{ width: "100%" }}
                           transition={{ duration: 2, delay: 1 }}
                           className="h-full bg-brand-orange"
                         />
                       </div>
                       <div className="flex justify-between text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
-                        <span>Eficiência de Rota</span>
-                        <span className="text-white">85% Otimizado</span>
+                        <span>Eficiência de Rota e Otimização 100%</span>
                       </div>
                     </div>
                   </div>
@@ -346,7 +345,7 @@ export default function App() {
                   Gestão Baseada em <br /> <span className="italic">Dados e Resultados</span>.
                 </h2>
                 <p className="text-black/80 text-xl font-medium leading-relaxed mb-16">
-                  {userName}, entregamos mais que carga: entregamos inteligência de mercado. Nosso dashboard exclusivo permite que você acompanhe KPIs críticos, garantindo que sua operação esteja sempre um passo à frente.
+                  Nosso dashboard exclusivo permite que você acompanhe KPIs críticos.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
