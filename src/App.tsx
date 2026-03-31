@@ -51,10 +51,7 @@ const SolutionCard = ({ icon: Icon, title, description, items }: { icon: any, ti
 );
 
 export default function App() {
-  const [userName, setUserName] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [tempName, setTempName] = useState("");
+  const [userName] = useState("Gestor(a)");
   const [scrolled, setScrolled] = useState(false);
 
   const { scrollYProgress } = useScroll();
@@ -65,148 +62,35 @@ export default function App() {
   });
 
   const whatsappNumber = "5551985147158"; 
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=Olá! Sou ${userName}, gostaria de agendar uma reunião estratégica com a Pellizzer Transportes.`;
-
-  const handleNameSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (tempName.trim()) {
-      setUserName(tempName.trim());
-      setIsGenerating(true);
-      
-      // Simulate "generating" personalized content
-      setTimeout(() => {
-        setIsGenerating(false);
-        setIsSubmitted(true);
-        localStorage.setItem("pellizzer_user_name", tempName.trim());
-      }, 2500);
-    }
-  };
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=Olá! Sou Gestor(a), gostaria de agendar uma reunião estratégica com a Pellizzer Transportes.`;
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
-    
-    const savedName = localStorage.getItem("pellizzer_user_name");
-    if (savedName) {
-      setUserName(savedName);
-      setIsSubmitted(true);
-    }
-    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleDownloadPDF = () => {
+    window.print();
+  };
 
   return (
     <div className="min-h-screen selection:bg-brand-orange selection:text-white bg-brand-black">
       {/* Scroll Progress Bar */}
-      {isSubmitted && (
-        <motion.div 
-          className="fixed top-0 left-0 right-0 h-1 bg-brand-orange z-[100] origin-left"
-          style={{ scaleX }}
-        />
-      )}
-      <AnimatePresence mode="wait">
-        {!isSubmitted && !isGenerating && (
-          <motion.div 
-            key="modal"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-black px-6"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-orange/10 via-transparent to-transparent opacity-50" />
-            <motion.div 
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              className="glass-card p-12 rounded-[40px] max-w-lg w-full relative z-10 text-center border-white/10"
-            >
-              <div className="w-20 h-20 bg-brand-orange rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-brand-orange/20">
-                <UserCircle2 className="text-black w-10 h-10" />
-              </div>
-              <h2 className="text-4xl font-bold font-display text-white mb-4">Proposta Exclusiva.</h2>
-              <p className="text-zinc-400 mb-10 leading-relaxed">
-                Preparamos uma apresentação estratégica **100% personalizada** para você e sua empresa. Como devemos chamá-lo(a)?
-              </p>
-              <form onSubmit={handleNameSubmit} className="space-y-6">
-                <input 
-                  autoFocus
-                  type="text" 
-                  placeholder="Seu nome ou cargo"
-                  value={tempName}
-                  onChange={(e) => setTempName(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-orange/50 transition-colors text-lg text-center"
-                />
-                <button 
-                  type="submit"
-                  className="w-full bg-brand-orange text-black font-bold py-5 rounded-2xl text-xl hover:bg-white transition-all duration-300 shadow-lg shadow-brand-orange/10"
-                >
-                  Ver Minha Apresentação Personalizada
-                </button>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-
-        {isGenerating && (
-          <motion.div 
-            key="generating"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[110] flex flex-col items-center justify-center bg-brand-black px-6 text-center"
-          >
-            <div className="w-24 h-24 relative mb-12">
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 border-4 border-brand-orange/20 rounded-full"
-              />
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 border-4 border-t-brand-orange rounded-full"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <BarChart3 className="text-brand-orange w-8 h-8 animate-pulse" />
-              </div>
-            </div>
-            <motion.h3 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-3xl font-bold font-display text-white mb-4"
-            >
-              Olá, {tempName}.
-            </motion.h3>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-zinc-500 max-w-sm"
-            >
-              Estamos consolidando dados estratégicos e preparando sua apresentação personalizada...
-            </motion.p>
-            
-            <div className="mt-12 w-64 h-1 bg-white/5 rounded-full overflow-hidden">
-              <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 2.5, ease: "easeInOut" }}
-                className="h-full bg-brand-orange"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {isSubmitted && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
+      <motion.div 
+        className="fixed top-0 left-0 right-0 h-1 bg-brand-orange z-[100] origin-left print:hidden"
+        style={{ scaleX }}
+      />
+      
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
           {/* Navigation */}
-          <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-brand-black/90 backdrop-blur-xl border-b border-white/5 h-20" : "bg-transparent h-24"}`}>
+          <nav className={`fixed top-0 w-full z-50 transition-all duration-500 print:hidden ${scrolled ? "bg-brand-black/90 backdrop-blur-xl border-b border-white/5 h-20" : "bg-transparent h-24"}`}>
             <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-brand-orange rounded-xl flex items-center justify-center shadow-lg shadow-brand-orange/20">
@@ -280,10 +164,16 @@ export default function App() {
                     href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group bg-brand-orange text-black px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white transition-all duration-300 flex items-center gap-3"
+                    className="group bg-brand-orange text-black px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white transition-all duration-300 flex items-center gap-3 print:hidden"
                   >
                     Falar com um Consultor <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </a>
+                  <button 
+                    onClick={handleDownloadPDF}
+                    className="group bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-3 print:hidden"
+                  >
+                    Baixar Apresentação (PDF) <ArrowUpRight className="w-5 h-5" />
+                  </button>
                 </div>
               </motion.div>
 
